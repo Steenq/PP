@@ -11,8 +11,7 @@ public class Main {
         StringBuilder ss = new StringBuilder();
 
         try {
-
-            // После работы с XML, если что-то было собрано в StringBuilder, записываем его в файл:
+            //test
             String s = ss.toString().toUpperCase(); // Если нужно привести к верхнему регистру
             System.out.println(s);
 

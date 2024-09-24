@@ -5,7 +5,7 @@
     <Buttons>
         <Button Action="CREATE_NEW_OFFER" Color="blue" Condition="true">
             <T>Новый заказ</T>
-            <D Color="red">Заказать книгу</D>
+            <D Color="red">Заказать книгу или нет</D>
             <D>Заказать тетрадь</D>
         </Button>
         <Button Action="RETURN_PRODUCT" Color="red" Condition="true">
