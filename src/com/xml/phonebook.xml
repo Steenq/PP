@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Screen Stage="Main">
+    <Title>Личный кабинет</Title>
+    <Description>Выберите действие</Description>
+    <Buttons>
+        <Button Action="CREATE_NEW_OFFER" Color="blue" Condition="true">
+            <T>Новый заказ</T>
+            <D Color="red">Заказать книгу</D>
+            <D>Заказать тетрадь</D>
+        </Button>
+        <Button Action="RETURN_PRODUCT" Color="red" Condition="true">
+            <T>Возврат</T>
+            <D>Оформить возврат</D>
+        </Button>
+        <Button Action="HISTORY" Color="grey" Condition="false">
+            <T>История покупок</T>
+            <D>За весь период</D>
+            <D>За последний месяц</D>
+            <D Color="Green"> За последний год</D>
+        </Button>
+    </Buttons>
+    <Attributes>
+        <Attribute A="BC">
+            <V>Атрибут №1</V>
+        </Attribute>
+        <Attribute A="DE">
+            <V>Атрибут №2</V>
+        </Attribute>
+        <Attribute A="FG">
+            <V>Атрибут №3</V>
+        </Attribute>
+    </Attributes>
+</Screen>
