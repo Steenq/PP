@@ -5,11 +5,8 @@ import java.io.IOException;
 
 public class Main {
     public static void main(String[] args) {
-        // Создаем экземпляр SAXExample, который будет разбирать XML файл
-        SAXExample saxExample = new SAXExample();
 
-        // Здесь SAXExample будет выводить данные из XML файла (например, phonebook.xml)
-        // Если вам нужно сохранить результат в файл:
+        SAXExample saxExample = new SAXExample();
 
         StringBuilder ss = new StringBuilder();
 
