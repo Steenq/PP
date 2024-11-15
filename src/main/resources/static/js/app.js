@@ -16,3 +16,4 @@ function startGame2() {
         .catch(error => console.error('Ошибка:', error));
 }
 alert( 1 || 3 || 2 || 4);
+//kjhb
