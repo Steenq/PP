@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Игровой сервер</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <title>Upload File</title>
 </head>
 <body>
-<h1>Добро пожаловать в игровой сервер!</h1>
-<button onclick="startGame1()">Запустить Игру 1</button>
-<button onclick="startGame2()">Запустить Игру 2</button>
-<div id="result"></div>
-<script src="/js/app.js"></script>
+    <h1>Upload File</h1>
+    <form action="/files/upload" method="post" enctype="multipart/form-data">
+        <input type="file" name="file" required>
+        <button type="submit">Upload</button>
+    </form>
 </body>
 </html>

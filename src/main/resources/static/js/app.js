@@ -15,5 +15,16 @@ function startGame2() {
         })
         .catch(error => console.error('Ошибка:', error));
 }
-alert( 1 || 3 || 2 || 4);
-//hello
+let ask = (question, yes, no) => {
+  if (confirm(question)) yes()
+  else no();
+}
+
+ask(
+  "Вы согласны?",
+  function() { alert("Вы согласились."); },
+  function() { alert("Вы отменили выполнение."); }
+);
+for (let i = 0; i < 5; i++) {
+  console.log("value,", i);
+}
