@@ -8,7 +8,8 @@ public class TxtFileProcessor implements FileProcessor {
     @Override
     public String process(String content) {
         // Логика обработки текста
-        String regex = "\\d+(\\s*[\\+\\-\\*\\/]\\s*\\d+)+";
+        String regex = "(\\d+(\\s*[-+*/^]\\s*\\d+)*(\\s*\\(.*?\\))*)";
+
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(content);
