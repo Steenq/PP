@@ -22,13 +22,21 @@ public class TxtFileProcessor implements FileProcessor {
             int start = matcher.start();
             int end = matcher.end();
 
-            String res = "answer";
-            StringBuilder newRes = new StringBuilder(content);
-            newRes.replace(start + newStart,end + newEnd,res);
-            newStart += res.length() - expression.length();
-            newEnd += res.length() - expression.length();
-            content = newRes.toString();
+            String res = "52";
+            content = content.replace(expression,res);
         }
         return content;
     }
+
+    String recProc(String content) {
+        String bracketsReg = "\\(([^()]+)\\)";
+        String defReg = "\\d+(\\s*[-+*/^]\\s*\\d+)*";
+        Pattern brpat = Pattern.compile(bracketsReg);
+        Matcher brmatch = brpat.matcher(content);
+        while(brmatch.find()) {
+
+        }
+    }
+
+    String calculate
 }
