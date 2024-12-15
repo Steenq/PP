@@ -1,0 +1,7 @@
+name: "example"
+values:
+  - "2 + 3 * 4"
+  - "10 / 2"
+nested:
+  key: "5 + 7"
+  anotherKey: "Hello, world!"

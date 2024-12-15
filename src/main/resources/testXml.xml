@@ -1,0 +1,7 @@
+<root>
+    <expression>2 + 3 * 4</expression>
+    <nested>
+        <value>10 / 2</value>
+    </nested>
+    <text>Hello, world!</text>
+</root>

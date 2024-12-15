@@ -1,9 +1,6 @@
 package com.example.server.factory;
 
-import com.example.server.processor.FileProcessor;
-import com.example.server.processor.JsonFileProcessor;
-import com.example.server.processor.TxtFileProcessor;
-import com.example.server.processor.XmlFileProcessor;
+import com.example.server.processor.*;
 
 public class FileProcessorFactory {
 
@@ -13,6 +10,10 @@ public class FileProcessorFactory {
                 return new TxtFileProcessor();
             case "json":
                 return new JsonFileProcessor();
+            case "xml":
+                return new XmlFileProcessor();
+            case "yaml":
+                return new YamlFileProcessor();
             default:
                 throw new IllegalArgumentException("Unsupported file type: " + fileType);
         }
