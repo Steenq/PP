@@ -60,10 +60,24 @@
 <form action="/files/upload" method="post" enctype="multipart/form-data">
     <input type="file" name="file" required>
 
-    <!-- Checkbox for archiving -->
-    <label>
-        <input type="checkbox" name="archive" value="true"> Archive the processed file
+    <!-- Dropdown menu for archiving -->
+    <label for="archiving">
+        <span>Choose archiving method:</span>
+        <select id="archiving" name="archivingMethod">
+            <option value="none">no archiving</option>
+            <option value="rar">rar</option>
+            <option value="zip">zip</option>
+        </select>
     </label>
+
+    <script>
+        function handleArchivingSelection(event) {
+            const selectedOption = event.target.value;
+            console.log('Selected archiving option:', selectedOption);
+            // Здесь можно добавить код для обработки выбора пользователя
+        }
+    </script>
+
 
     <button type="submit">Upload</button>
 </form>

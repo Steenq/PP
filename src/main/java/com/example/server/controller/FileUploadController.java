@@ -4,13 +4,8 @@ import com.example.server.factory.FileProcessorFactory;
 import com.example.server.processor.FileProcessor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import com.example.server.factory.FileProcessorFactory;
-import com.example.server.processor.FileProcessor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
@@ -23,7 +18,10 @@ import java.nio.charset.StandardCharsets;
 public class FileUploadController {
 
     @PostMapping("/upload")
-    public ResponseEntity<byte[]> uploadFile(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<byte[]> uploadFile(
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("archivingMethod") String archivingMethod) {
+
         try {
             String FileName = file.getOriginalFilename().split("\\.")[0];
             String fileType = file.getOriginalFilename().split("\\.")[1];
@@ -34,10 +32,19 @@ public class FileUploadController {
 
             String processedContent = processor.process(content);
 
-            byte[] processedFileBytes = processedContent.getBytes(StandardCharsets.UTF_8);
+            byte[] processedFileBytes;
+
+            // Archiving logic based on user's choice
+            if ("zip".equalsIgnoreCase(archivingMethod)) {
+                processedFileBytes = archiveAsZip(processedContent);
+            } else if ("rar".equalsIgnoreCase(archivingMethod)) {
+                processedFileBytes = archiveAsRar(processedContent);
+            } else {
+                processedFileBytes = processedContent.getBytes(StandardCharsets.UTF_8);
+            }
 
             HttpHeaders headers = new HttpHeaders();
-            headers.add("Content-Disposition", "attachment; filename=" + FileName +"_processed." + fileType);
+            headers.add("Content-Disposition", "attachment; filename=" + FileName + "_processed." + fileType);
 
             return ResponseEntity
                     .status(HttpStatus.OK)
@@ -48,5 +55,19 @@ public class FileUploadController {
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(("Ошибка чтения файла").getBytes());
         }
+    }
+
+    // Method to archive the content as ZIP
+    private byte[] archiveAsZip(String content) {
+        // Implement the logic to create a ZIP archive
+        // This is a placeholder implementation
+        return content.getBytes(StandardCharsets.UTF_8);
+    }
+
+    // Method to archive the content as RAR
+    private byte[] archiveAsRar(String content) {
+        // Implement the logic to create a RAR archive
+        // This is a placeholder implementation
+        return content.getBytes(StandardCharsets.UTF_8);
     }
 }
