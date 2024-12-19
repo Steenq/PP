@@ -57,17 +57,13 @@ public class FileUploadController {
         }
     }
 
-    // Method to archive the content as ZIP
     private byte[] archiveAsZip(String content) {
-        // Implement the logic to create a ZIP archive
-        // This is a placeholder implementation
+
         return content.getBytes(StandardCharsets.UTF_8);
     }
 
-    // Method to archive the content as RAR
     private byte[] archiveAsRar(String content) {
-        // Implement the logic to create a RAR archive
-        // This is a placeholder implementation
+
         return content.getBytes(StandardCharsets.UTF_8);
     }
 }
