@@ -9,9 +9,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @RestController
 @RequestMapping("/files")
@@ -34,9 +37,15 @@ public class FileUploadController {
 
             byte[] processedFileBytes;
 
-            // Archiving logic based on user's choice
             if ("zip".equalsIgnoreCase(archivingMethod)) {
-                processedFileBytes = archiveAsZip(processedContent);
+                processedFileBytes = archiveAsZip(processedContent, FileName, fileType);
+                HttpHeaders headers = new HttpHeaders();
+                headers.add("Content-Disposition", "attachment; filename=" + FileName + "_processed.zip");
+
+                return ResponseEntity
+                        .status(HttpStatus.OK)
+                        .headers(headers)
+                        .body(processedFileBytes);
             } else if ("rar".equalsIgnoreCase(archivingMethod)) {
                 processedFileBytes = archiveAsRar(processedContent);
             } else {
@@ -57,9 +66,23 @@ public class FileUploadController {
         }
     }
 
-    private byte[] archiveAsZip(String content) {
+    private byte[] archiveAsZip(String content, String Filename, String fileType) {
 
-        return content.getBytes(StandardCharsets.UTF_8);
+        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+             ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
+
+            ZipEntry zipEntry = new ZipEntry("processed_" + Filename + "." + fileType);
+            zipOutputStream.putNextEntry(zipEntry);
+
+            zipOutputStream.write(content.getBytes(StandardCharsets.UTF_8));
+            zipOutputStream.closeEntry();
+
+            zipOutputStream.finish();
+
+            return byteArrayOutputStream.toByteArray();
+        } catch (IOException e) {
+            throw new RuntimeException("Ошибка при создании ZIP-архива: " + e.getMessage(), e);
+        }
     }
 
     private byte[] archiveAsRar(String content) {
