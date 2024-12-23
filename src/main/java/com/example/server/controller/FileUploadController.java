@@ -2,6 +2,9 @@ package com.example.server.controller;
 
 import com.example.server.factory.FileProcessorFactory;
 import com.example.server.processor.FileProcessor;
+import com.example.server.unzipping.FileUnzip;
+import com.example.server.unzipping.UnZip;
+import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
@@ -29,7 +32,16 @@ public class FileUploadController {
             String FileName = file.getOriginalFilename().split("\\.")[0];
             String fileType = file.getOriginalFilename().split("\\.")[1];
 
-            String content = new String(file.getBytes(), StandardCharsets.UTF_8);
+            String content;
+            if ("zip".equalsIgnoreCase(fileType)) {
+                FileUnzip unzipping = new UnZip();
+                UnZip UnZipProc = new UnZip();
+                ImmutablePair<String, String> unzippedFile = UnZipProc.Unzipping(file.getBytes());
+                content = unzippedFile.getRight();
+                fileType = unzippedFile.getLeft(); // Обновляем тип файла
+            } else {
+                content = new String(file.getBytes(), StandardCharsets.UTF_8);
+            }
 
             FileProcessor processor = FileProcessorFactory.getProcessor(fileType);
 
