@@ -15,6 +15,7 @@
             margin-top: 20px;
             color: #333;
         }
+
         form {
             margin: 50px auto;
             padding: 20px;
@@ -24,16 +25,19 @@
             max-width: 400px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
+
         input[type="file"] {
             display: block;
             margin: 20px auto;
             padding: 10px;
         }
+
         label {
             display: block;
             margin: 10px auto;
             font-size: 14px;
         }
+
         button {
             background-color: #28a745;
             color: #fff;
@@ -45,9 +49,11 @@
             cursor: pointer;
             transition: background-color 0.3s ease;
         }
+
         button:hover {
             background-color: #218838;
         }
+
         #result {
             margin-top: 20px;
             font-size: 18px;
@@ -64,20 +70,57 @@
     <label for="archiving">
         <span>Choose archiving method:</span>
         <select id="archiving" name="archivingMethod">
-            <option value="none">no archiving</option>
-            <option value="rar">rar</option>
-            <option value="zip">zip</option>
+            <option value="none">No archiving</option>
+            <option value="rar">RAR</option>
+            <option value="zip">ZIP</option>
         </select>
     </label>
 
+    <!-- Dropdown menu for encryption -->
+    <label for="encryption">
+        <span>Choose encryption method:</span>
+        <select id="encryption" name="encryptionMethod">
+            <option value="none">No encryption</option>
+            <option value="aes">AES Encryption</option>
+        </select>
+    </label>
+
+    <!-- Checkbox for file encryption status -->
+    <label for="isEncrypted">
+        <span>Is the file already encrypted?</span>
+        <input type="checkbox" id="isEncrypted" name="isEncrypted">
+    </label>
+
     <script>
+        // Функция обработки выбора архивации
         function handleArchivingSelection(event) {
             const selectedOption = event.target.value;
             console.log('Selected archiving option:', selectedOption);
-            // Здесь можно добавить код для обработки выбора пользователя
         }
-    </script>
 
+        // Функция обработки выбора шифрования
+        function handleEncryptionSelection(event) {
+            const selectedOption = event.target.value;
+            console.log('Selected encryption option:', selectedOption);
+        }
+
+        // Функция обработки статуса зашифрованного файла
+        function handleEncryptionStatus(event) {
+            const isEncrypted = event.target.checked;
+            console.log('Is the file encrypted:', isEncrypted);
+        }
+
+        // Назначаем обработчики событий после загрузки страницы
+        document.addEventListener("DOMContentLoaded", function () {
+            const archivingSelect = document.getElementById("archiving");
+            const encryptionSelect = document.getElementById("encryption");
+            const isEncryptedCheckbox = document.getElementById("isEncrypted");
+
+            archivingSelect.addEventListener("change", handleArchivingSelection);
+            encryptionSelect.addEventListener("change", handleEncryptionSelection);
+            isEncryptedCheckbox.addEventListener("change", handleEncryptionStatus);
+        });
+    </script>
 
     <button type="submit">Upload</button>
 </form>
