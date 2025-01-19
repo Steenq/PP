@@ -1,17 +1,16 @@
 package com.example.server.processor;
 
-import com.example.server.countmodels.searchCount;
+import com.example.server.expressionEvaluator.searchAndEvalExpressions;
 import org.yaml.snakeyaml.DumperOptions;
 import org.yaml.snakeyaml.LoaderOptions;
 import org.yaml.snakeyaml.Yaml;
 import org.yaml.snakeyaml.constructor.SafeConstructor;
-import org.yaml.snakeyaml.representer.Representer;
 
 import java.util.*;
 
 public class YamlFileProcessor implements FileProcessor {
 
-    private final searchCount searchProcessor = new searchCount(); // Используем класс для обработки выражений
+    private final searchAndEvalExpressions searchProcessor = new searchAndEvalExpressions(); // Используем класс для обработки выражений
 
     @Override
     public String process(String content) {

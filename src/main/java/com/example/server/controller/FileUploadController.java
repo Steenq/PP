@@ -3,33 +3,25 @@ package com.example.server.controller;
 import com.example.server.factory.FileProcessorFactory;
 import com.example.server.processor.EncryptionFileProcessor;
 import com.example.server.processor.FileProcessor;
-import com.example.server.unzipping.FileUnzip;
-import com.example.server.unzipping.UnRar;
-import com.example.server.unzipping.UnZip;
+import com.example.server.service.archiving.RarProcessor;
+import com.example.server.service.archiving.ZipProcessor;
+import com.example.server.service.archiving.archivingProcess;
+import com.example.server.service.dearchiving.FileUnzip;
+import com.example.server.service.dearchiving.UnRar;
+import com.example.server.service.dearchiving.UnZip;
+import com.example.server.service.decryption.decryptionAes16;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.multipart.MultipartFile;
-
-import javax.crypto.Cipher;
-import javax.crypto.spec.IvParameterSpec;
-import javax.crypto.spec.SecretKeySpec;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.Base64;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
 
 @RestController
 @RequestMapping("/files")
 public class FileUploadController {
-    private static final String AES = "AES";
-    private static final String AES_CIPHER_ALGORITHM = "AES/CBC/PKCS5Padding";
     private static final String FIXED_KEY = "1234567890123456";
     private static final String FIXED_IV = "abcdefghijklmnop";
     @PostMapping("/upload")
@@ -64,7 +56,8 @@ public class FileUploadController {
             System.out.println(isEncrypted);
             System.out.println(isEncrypted);
             if("off,on".equalsIgnoreCase(isEncrypted)) {
-                content = decrypt(content, FIXED_KEY, FIXED_IV);
+                decryptionAes16 dec = new decryptionAes16();
+                content = dec.decrypt(content, FIXED_KEY, FIXED_IV);
             }
             FileProcessor processor = FileProcessorFactory.getProcessor(fileType);
 
@@ -77,7 +70,8 @@ public class FileUploadController {
                 processedContent = encryption.process(processedContent);
             }
             if ("zip".equalsIgnoreCase(archivingMethod)) {
-                processedFileBytes = archiveAsZip(processedContent, FileName, fileType);
+                archivingProcess proc1 = new ZipProcessor();
+                processedFileBytes = proc1.archive(processedContent, FileName, fileType);
                 HttpHeaders headers = new HttpHeaders();
                 headers.add("Content-Disposition", "attachment; filename=" + FileName + "_processed.zip");
 
@@ -86,7 +80,8 @@ public class FileUploadController {
                         .headers(headers)
                         .body(processedFileBytes);
             } else if ("rar".equalsIgnoreCase(archivingMethod)) {
-                processedFileBytes = archiveAsRar(processedContent);
+                archivingProcess proc2 = new RarProcessor();
+                processedFileBytes = proc2.archive(processedContent, FileName, fileType);
             } else {
                 processedFileBytes = processedContent.getBytes(StandardCharsets.UTF_8);
             }
@@ -106,38 +101,4 @@ public class FileUploadController {
             throw new RuntimeException(e);
         }
     }
-
-    private byte[] archiveAsZip(String content, String Filename, String fileType) {
-
-        try (ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-             ZipOutputStream zipOutputStream = new ZipOutputStream(byteArrayOutputStream)) {
-
-            ZipEntry zipEntry = new ZipEntry("processed_" + Filename + "." + fileType);
-            zipOutputStream.putNextEntry(zipEntry);
-
-            zipOutputStream.write(content.getBytes(StandardCharsets.UTF_8));
-            zipOutputStream.closeEntry();
-
-            zipOutputStream.finish();
-
-            return byteArrayOutputStream.toByteArray();
-        } catch (IOException e) {
-            throw new RuntimeException("Ошибка при создании ZIP-архива: " + e.getMessage(), e);
-        }
-    }
-
-    private byte[] archiveAsRar(String content) {
-
-        return content.getBytes(StandardCharsets.UTF_8);
-    }
-    // Метод для расшифровки
-    private String decrypt(String encryptedData, String key, String iv) throws Exception {
-        Cipher cipher = Cipher.getInstance(AES_CIPHER_ALGORITHM);
-        SecretKeySpec secretKeySpec = new SecretKeySpec(key.getBytes(), AES);
-        IvParameterSpec ivParameterSpec = new IvParameterSpec(iv.getBytes());
-        cipher.init(Cipher.DECRYPT_MODE, secretKeySpec, ivParameterSpec);
-        byte[] decryptedBytes = cipher.doFinal(Base64.getDecoder().decode(encryptedData));
-        return new String(decryptedBytes);
-    }
-
 }

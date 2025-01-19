@@ -1,6 +1,6 @@
 package com.example.server.processor;
 
-import com.example.server.countmodels.searchCount;
+import com.example.server.expressionEvaluator.searchAndEvalExpressions;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.*;
@@ -11,7 +11,7 @@ import java.util.Map;
 
 public class JsonFileProcessor implements FileProcessor {
 
-    private final searchCount searchProcessor = new searchCount(); // Экземпляр класса searchCount
+    private final searchAndEvalExpressions searchProcessor = new searchAndEvalExpressions(); // Экземпляр класса searchCount
 
     @Override
     public String process(String content) {

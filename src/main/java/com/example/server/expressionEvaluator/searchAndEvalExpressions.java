@@ -1,9 +1,9 @@
-package com.example.server.countmodels;
+package com.example.server.expressionEvaluator;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class searchCount {
+public class searchAndEvalExpressions {
     public String methodLib(String content) {
         return recProcLib(content);
     }
@@ -16,7 +16,7 @@ public class searchCount {
         // Обрабатываем выражения в скобках
         while (brmatch.find()) {
             String expression = brmatch.group(1);
-            String res = new countwithLib().calculate(expression);
+            String res = new com.example.server.expressionEvaluator.countwithLib().calculate(expression);
             content = content.replaceFirst(Pattern.quote("(" + expression + ")"), res);
             return recProcLib(content); // Рекурсия для следующего уровня
         }

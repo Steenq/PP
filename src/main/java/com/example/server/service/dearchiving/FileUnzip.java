@@ -1,6 +1,5 @@
-package com.example.server.unzipping;
+package com.example.server.service.dearchiving;
 
-import ch.qos.logback.core.joran.sanity.Pair;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
 public interface FileUnzip {

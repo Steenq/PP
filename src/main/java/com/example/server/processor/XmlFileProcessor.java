@@ -1,22 +1,18 @@
 package com.example.server.processor;
 
-import com.example.server.countmodels.searchCount;
+import com.example.server.expressionEvaluator.searchAndEvalExpressions;
 import org.w3c.dom.*;
 
-import javax.script.ScriptEngine;
-import javax.script.ScriptEngineManager;
-import javax.script.ScriptException;
 import javax.xml.parsers.*;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import java.io.*;
-import org.xml.sax.SAXException;
 
 public class XmlFileProcessor implements FileProcessor {
 
-    private final searchCount searchProcessor = new searchCount(); // Используем готовый класс
+    private final searchAndEvalExpressions searchProcessor = new searchAndEvalExpressions(); // Используем готовый класс
 
     @Override
     public String process(String content) {

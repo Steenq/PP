@@ -1,6 +1,5 @@
-package com.example.server.unzipping;
+package com.example.server.service.dearchiving;
 
-import ch.qos.logback.core.joran.sanity.Pair;
 //import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.tuple.ImmutablePair;
 
@@ -11,7 +10,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
-public class UnZip implements FileUnzip{
+public class UnZip implements FileUnzip {
     public ImmutablePair<String, String> Unzipping(byte[] content) {
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(content);
              ZipInputStream zipInputStream = new ZipInputStream(byteArrayInputStream);

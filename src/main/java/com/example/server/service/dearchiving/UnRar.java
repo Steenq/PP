@@ -1,6 +1,5 @@
-package com.example.server.unzipping;
+package com.example.server.service.dearchiving;
 
-import ch.qos.logback.core.joran.sanity.Pair;
 import com.github.junrar.Archive;
 import com.github.junrar.exception.RarException;
 import com.github.junrar.rarfile.FileHeader;
@@ -10,7 +9,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
-public class UnRar implements FileUnzip{
+public class UnRar implements FileUnzip {
     @Override
     public ImmutablePair<String, String> Unzipping(byte[] content) {
         try (ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(content);
