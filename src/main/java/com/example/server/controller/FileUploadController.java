@@ -37,12 +37,12 @@ public class FileUploadController {
             @RequestParam("file") MultipartFile file,
             @RequestParam("archivingMethod") String archivingMethod,
             @RequestParam("encryptionMethod") String encryptionMethod,
-            @RequestParam("isEncrypted") String isEncrypted) throws Exception {
+            @RequestParam("isEncrypted") String isEncrypted) {
 
         try {
             String FileName = file.getOriginalFilename().split("\\.")[0];
             String fileType = file.getOriginalFilename().split("\\.")[1];
-
+            System.out.println(fileType);
             String content;
             if ("zip".equalsIgnoreCase(fileType)) {
                 FileUnzip unzipping = new UnZip();
@@ -50,6 +50,7 @@ public class FileUploadController {
                 ImmutablePair<String, String> unzippedFile = UnZipProc.Unzipping(file.getBytes());
                 content = unzippedFile.getRight();
                 fileType = unzippedFile.getLeft(); // Обновляем тип файла
+                System.out.println(fileType);
             } else if ("rar".equalsIgnoreCase(fileType)) {
                 FileUnzip unzipping = new UnRar();
                 UnRar UnRarProc = new UnRar();
@@ -61,7 +62,8 @@ public class FileUploadController {
             }
 
             System.out.println(isEncrypted);
-            if("on".equalsIgnoreCase(isEncrypted)) {
+            System.out.println(isEncrypted);
+            if("off,on".equalsIgnoreCase(isEncrypted)) {
                 content = decrypt(content, FIXED_KEY, FIXED_IV);
             }
             FileProcessor processor = FileProcessorFactory.getProcessor(fileType);
@@ -100,6 +102,8 @@ public class FileUploadController {
             return ResponseEntity.badRequest().body(("Ошибка: " + e.getMessage()).getBytes());
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(("Ошибка чтения файла").getBytes());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 

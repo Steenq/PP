@@ -70,7 +70,7 @@
     <label for="archiving">
         <span>Choose archiving method:</span>
         <select id="archiving" name="archivingMethod">
-            <option value="none">No archiving</option>
+            <option value="none" selected>No archiving</option>
             <option value="rar">RAR</option>
             <option value="zip">ZIP</option>
         </select>
@@ -80,7 +80,7 @@
     <label for="encryption">
         <span>Choose encryption method:</span>
         <select id="encryption" name="encryptionMethod">
-            <option value="none">No encryption</option>
+            <option value="none" selected>No encryption</option>
             <option value="aes">AES Encryption</option>
         </select>
     </label>
@@ -88,7 +88,9 @@
     <!-- Checkbox for file encryption status -->
     <label for="isEncrypted">
         <span>Is the file already encrypted?</span>
-        <input type="checkbox" id="isEncrypted" name="isEncrypted">
+        <input type="hidden" name="isEncrypted" value="off">
+        <input type="checkbox" id="isEncrypted" name="isEncrypted" value="on">
+
     </label>
 
     <script>
