@@ -13,15 +13,15 @@ class TxtFileProcessorTest {
 
     @BeforeEach
     void setUp() {
-        searchProcessor = new searchAndEvalExpressions(); // Реальный экземпляр searchCount
-        txtFileProcessor = new TxtFileProcessor(); // Реальный TxtFileProcessor
+        searchProcessor = new searchAndEvalExpressions();
+        txtFileProcessor = new TxtFileProcessor();
     }
 
     @Test
     void testProcess() {
         String input = "Привет, у меня есть 3+1 яблока и я не знаю что с ними делать.\n" +
                 "Помоги раздать каждому бедному африканцу по ((5/5)+1.1) яблоку.";
-        String expectedOutput = searchProcessor.methodLib(input); // Используем реальную логику searchCount
+        String expectedOutput = searchProcessor.methodLib(input);
 
         String result = txtFileProcessor.process(input);
 

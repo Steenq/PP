@@ -9,7 +9,7 @@ public class searchAndEvalExpressions {
     }
     public String recProcLib(String content) {
         String bracketsReg = "\\(([^()]+)\\)";
-        String defReg = "\\d+(\\s*[-+*/^]\\s*\\d+)*";
+        String defReg = "-?\\d+(\\.\\d+)?(\\s*[-+*/^]\\s*-?\\d+(\\.\\d+)?)*";
         Pattern brpat = Pattern.compile(bracketsReg);
         Matcher brmatch = brpat.matcher(content);
 

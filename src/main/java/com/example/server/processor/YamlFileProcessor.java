@@ -15,21 +15,20 @@ public class YamlFileProcessor implements FileProcessor {
     @Override
     public String process(String content) {
         try {
-            // Парсинг YAML в структуру данных (Map или List)
+            // Парсинг YAML
             LoaderOptions loaderOptions = new LoaderOptions();
             Yaml yaml = new Yaml(new SafeConstructor(loaderOptions));
             Object data = yaml.load(content);
 
-            // Рекурсивная обработка структуры данных
+            // Обработка
             Object processedData = processYamlNode(data);
 
-            // Преобразование обратно в YAML
+            // Преобразование обратно в YAML (блочный стиль)
             DumperOptions options = new DumperOptions();
-            options.setPrettyFlow(true);
-            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK);
-            LoaderOptions loaderOptions1 = new LoaderOptions();
-            Yaml dumper = new Yaml(new SafeConstructor(loaderOptions1));
+            options.setPrettyFlow(true); // Читаемая форма
+            options.setDefaultFlowStyle(DumperOptions.FlowStyle.BLOCK); // Блочный стиль
 
+            Yaml dumper = new Yaml(options); // Применяем настройки
             return dumper.dump(processedData);
         } catch (Exception e) {
             throw new IllegalArgumentException("Ошибка обработки YAML: " + e.getMessage(), e);

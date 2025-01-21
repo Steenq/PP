@@ -4,7 +4,7 @@ import net.objecthunter.exp4j.Expression;
 import net.objecthunter.exp4j.ExpressionBuilder;
 
 public class countwithLib{
-    public String calculate(String content) {
+    public static String calculate(String content) {
         Expression expression = new ExpressionBuilder(content).build();
         double result = expression.evaluate();
 
